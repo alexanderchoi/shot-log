@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
-import '../styles/InputShots.css';
+import '../styles/Input.css';
 
 class InputShots extends Component {
   state = {
     shotType: '',
     makes: 0,
     attempts: 0,
-    shotLog: []
+    shotLog: [
+      {makes: 45, attempts: 100, shotType:'Three'},
+      {makes: 60, attempts: 100, shotType:'Layup'},
+      {makes: 55, attempts: 100, shotType:'Midrange'},  
+    ]
   }
 
   changeAttempts = this.changeAttempts.bind(this);
   changeMakes = this.changeMakes.bind(this);
   changeShotType = this.changeShotType.bind(this);
   logShots = this.logShots.bind(this);
+  updateDisplay = this.updateDisplay.bind(this);
 
   changeAttempts(event) {
     this.setState({ attempts: parseInt(event.target.value) });
@@ -25,13 +30,27 @@ class InputShots extends Component {
   changeShotType(event) {
     this.setState({ shotType: event.target.value});
   }
+
   logShots(event) {
     let shotLog = this.state.shotLog;
     let newLog = {makes: this.state.makes, attempts: this.state.attempts, shotType: this.state.shotType}
     shotLog.push(newLog);
     this.setState({ shotLog });
+    // this.updateDisplay();
+    // console.log(this.state.shotLog);
     document.getElementById('display').innerHTML = `${this.state.makes}/${this.state.attempts} ${this.state.shotType}`;
   }
+
+  updateDisplay() {
+    let display = document.getElementById('display');
+    this.state.shotLog.map((log) => {
+      return display.innerHTML += log.makes;
+    });
+  }
+
+  componentDidMount() {
+    this.updateDisplay();
+  };
 
   render() {
     return(
