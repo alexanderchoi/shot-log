@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import '../styles/Input.css';
 
-class InputShots extends Component {
+import ShotLog from './ShotLog';
+
+class Input extends Component {
   state = {
     shotType: '',
     makes: 0,
     attempts: 0,
     shotLog: [
+      {makes: 45, attempts: 100, shotType:'Three'},
+      {makes: 60, attempts: 100, shotType:'Layup'},
+      {makes: 55, attempts: 100, shotType:'Midrange'},
       {makes: 45, attempts: 100, shotType:'Three'},
       {makes: 60, attempts: 100, shotType:'Layup'},
       {makes: 55, attempts: 100, shotType:'Midrange'},  
@@ -16,8 +21,8 @@ class InputShots extends Component {
   changeAttempts = this.changeAttempts.bind(this);
   changeMakes = this.changeMakes.bind(this);
   changeShotType = this.changeShotType.bind(this);
-  logShots = this.logShots.bind(this);
-  updateDisplay = this.updateDisplay.bind(this);
+  addNewLog = this.addNewLog.bind(this);
+  // updateDisplay = this.updateDisplay.bind(this);
 
   changeAttempts(event) {
     this.setState({ attempts: parseInt(event.target.value) });
@@ -31,26 +36,32 @@ class InputShots extends Component {
     this.setState({ shotType: event.target.value});
   }
 
-  logShots(event) {
+  addNewLog(event) {
+    if (this.state.makes > this.state.attempts) {
+      return alert(`You can't have more makes than attempts. Unless you're Kobe.`);
+    } else if (this.state.attempts < 1) {
+      return alert('You need more than 0 attempts');
+    } else if (this.state.shotType === '') {
+      return alert('Please select a shot type.');
+    }
     let shotLog = this.state.shotLog;
     let newLog = {makes: this.state.makes, attempts: this.state.attempts, shotType: this.state.shotType}
     shotLog.push(newLog);
-    this.setState({ shotLog });
+    this.setState({ makes: 0, attempts: 0, shotLog: shotLog });
+    document.getElementById('display').innerHTML = '';
+    document.getElementById('select').options[0].selected=true;
+    document.getElementById('makesButton').value = '';
+    document.getElementById('attemptsButton').value = '';
     // this.updateDisplay();
-    // console.log(this.state.shotLog);
-    document.getElementById('display').innerHTML = `${this.state.makes}/${this.state.attempts} ${this.state.shotType}`;
   }
 
-  updateDisplay() {
-    let display = document.getElementById('display');
-    this.state.shotLog.map((log) => {
-      return display.innerHTML += log.makes;
-    });
-  }
+  // updateDisplay() {
+  //   let display = document.getElementById('display');
+  // }
 
-  componentDidMount() {
-    this.updateDisplay();
-  };
+  // componentDidMount() {
+  //   this.updateDisplay();
+  // };
 
   render() {
     return(
@@ -59,8 +70,14 @@ class InputShots extends Component {
           <a href="/">Done</a>
         </section>
         <section className="two">
-          <p>state visualizer: shotType:{this.state.shotType} makes:{this.state.makes} attempts:{this.state.attempts}</p>
+          <p>state visualizer</p>
+          <p>shotType: {this.state.shotType}</p>
+          <p>makes: {this.state.makes} </p>
+          <p>attempts: {this.state.attempts}</p>
           <p id="display">Log some shots see it displayed here.</p>
+          <ShotLog 
+            shotLog={ this.state.shotLog }
+          />
         </section>
         <section className="three">
           {/* <form> */}
@@ -85,7 +102,7 @@ class InputShots extends Component {
                      placeholder="Attempts"
                      onChange={ this.changeAttempts }>
               </input>
-              <button onClick={ this.logShots }>Log</button>
+              <button onClick={ this.addNewLog }>Log</button>
             </div>
           {/* </form> */}
         </section>
@@ -94,4 +111,4 @@ class InputShots extends Component {
   }
 }
 
-export default InputShots;
+export default Input;

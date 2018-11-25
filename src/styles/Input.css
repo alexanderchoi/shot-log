@@ -41,7 +41,7 @@ body {
   vertical-align: middle;
   font-size: 1.2rem;
   margin: 0;
-  padding-top: 200px;
+  padding-top: 20px;
 }
 
 .div-select {
@@ -120,6 +120,28 @@ body {
   font-weight: 700;
 }
 
-#display {
+.div-shotLog {
+  width: 90vw;
+  margin: 0 auto;
+  height: 350px;
+  overflow: auto;
+  font-size: 1.3rem;
+}
+
+.div-log {
   color: white;
+  height: 3rem;
+  /* background-color: #ffcc14; */
+  border: 2px solid #ffcc14;
+  border-radius: 5px;
+  width: 95%;
+  margin: 15px 0;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.div-log span {
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.04rem;
 }
