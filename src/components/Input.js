@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import '../styles/Input.css';
 
 import ShotLog from './ShotLog';
@@ -18,22 +19,12 @@ class Input extends Component {
     ]
   }
 
-  changeAttempts = this.changeAttempts.bind(this);
-  changeMakes = this.changeMakes.bind(this);
-  changeShotType = this.changeShotType.bind(this);
+  handleChange = this.handleChange.bind(this);
   addNewLog = this.addNewLog.bind(this);
   // updateDisplay = this.updateDisplay.bind(this);
 
-  changeAttempts(event) {
-    this.setState({ attempts: parseInt(event.target.value) });
-  }
-
-  changeMakes(event) {
-    this.setState({ makes: parseInt(event.target.value) });
-  }
-
-  changeShotType(event) {
-    this.setState({ shotType: event.target.value});
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   addNewLog(event) {
@@ -82,7 +73,7 @@ class Input extends Component {
         <section className="three">
           {/* <form> */}
             <div className="div-select">
-              <select id="select" onChange={ this.changeShotType }>
+              <select id="select" name="shotType" onChange={ this.handleChange }>
                 <option select="defaultValue">
                 Select Your Shot Type
                 </option>
@@ -95,12 +86,14 @@ class Input extends Component {
               <input id="makesButton"
                      type="number"
                      placeholder="Makes"
-                     onChange={ this.changeMakes }>
+                     name="makes"
+                     onChange={ this.handleChange }>
               </input>
               <input id="attemptsButton"
                      type="number"
                      placeholder="Attempts"
-                     onChange={ this.changeAttempts }>
+                     name="attempts"
+                     onChange={ this.handleChange }>
               </input>
               <button onClick={ this.addNewLog }>Log</button>
             </div>
